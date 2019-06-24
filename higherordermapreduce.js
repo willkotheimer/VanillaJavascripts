@@ -78,5 +78,25 @@ const agesSquare = ages.map(age=> Math.sqrt(age));
 console.log(agesSquare);
 
 //sort
+const sortedCompanies = companies.sort(function(c1,c2) {
+if(c1.start > c2.start) {
+	return 1;
+} else {
+	return -1;
+}
+
+});
+
+console.log(sortedCompanies);
+
+//short form:
+const sortedCompanies2 = companies.sort((a,b)=> (a.start > b.start)? 
+1 : -1 );
+console.log(sortedCompanies2);
+//sorting ages
+
+const sortAges = ages.sort((a,b)=> (a > b)? 1: -1);
+
+console.log(sortAges);
 
 //reduce
