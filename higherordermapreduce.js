@@ -53,6 +53,29 @@ const tenyearcomps = companies.filter(company => (company.end - company.start >=
 console.log(tenyearcomps);
 
 //map
+//create array of company names
+
+//function syntax
+const companyNames = companies.map(function(company) {
+	return company.name;
+})
+
+console.log(companyNames);
+
+const testMap = companies.map(function(company) {
+	return `${company.name} [${company.start} - ${company.end}]`;
+
+});
+
+console.log(testMap);
+
+//shorthand:
+const testMap2 = companies.map(company => `${company.name} [${company.start} - ${company.end}]`);
+console.log(testMap2);
+
+//Map using ages
+const agesSquare = ages.map(age=> Math.sqrt(age));
+console.log(agesSquare);
 
 //sort
 
