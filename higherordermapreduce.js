@@ -99,4 +99,43 @@ const sortAges = ages.sort((a,b)=> (a > b)? 1: -1);
 
 console.log(sortAges);
 
+const sortAges2 = ages.sort((a,b)=> a-b);
+
+console.log(sortAges2);
+
 //reduce
+
+//for loop:
+
+/*
+let ageSum = 0;
+for(let i=0;i<ages.length; i++) {
+ageSum+=ages[i];
+}
+console.log(ageSum);
+
+*/
+
+const ageSum2 = ages.reduce(function(total,age) {
+return total+=age;
+},0);
+
+console.log(ageSum2);
+
+const ageSum3 = ages.reduce((total,age)=>total + age, 0);
+
+console.log(ageSum3);
+
+//total years of all companies:
+
+const totalYears = companies.reduce((totalYears,company)=>totalYears+ (company.end - company.start),0);
+console.log(totalYears);
+
+const combined = ages
+	.map(age => age*2)
+	.filter(age => age > 40)
+	.sort((a,b)=> a-b)
+	.reduce((a,b)=> a + b,0);
+
+console.log(combined);
+
