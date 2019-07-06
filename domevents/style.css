@@ -1,0 +1,42 @@
+
+body {
+	background-color: #d1d1d1;
+	color: white;
+}
+#square1 {
+
+	height: 12px;
+	width: 12px;
+	background-color: red;
+}
+
+#square2 {
+
+	height: 12px;
+	width: 12px;
+	background-color: blue;
+}
+#square3 {
+
+	height: 12px;
+	width: 12px;
+	background-color: green;
+}
+#square4 {
+
+	height: 12px;
+	width: 12px;
+	background-color: yellow;
+}
+#square5 {
+
+	height: 12px;
+	width: 12px;
+	background-color: cyan;
+}
+#square6 {
+
+	height: 12px;
+	width: 12px;
+	background-color: white;
+}
