@@ -8,8 +8,7 @@
   	}
 
   	function append(parent, el) {
-  	console.log(parent);
-  	console.log(el);
+  	
     return parent.appendChild(el); // Append the second parameter(element) to the first one
   	}
 
@@ -39,26 +38,51 @@
   }
 }
 
+  counter=2;
 
 	fetch('https://jsonplaceholder.typicode.com/albums/1/photos')
 	.then(response => response.json())
 	.then(function(data) {
 	let images = data;
+   let rowkeep = createNode('row');
 	return images.map(function(image) {
+    if (image.id > 20) return;
+    if(counter%2==0) {
+            
+            console.log(counter);
+          }
 		  let li = createNode('li'), //  Create the elements we need
           img = createNode('img'),
-          ul = createNode('ul'),
           span = createNode('span');
 
           
-          addClass(ul,'wow');
-          addClass(ul,'bounceInUp');
+          addClass(span,'wow');
+          addClass(span,'bounceInUp');
+          if(counter%2==0) {
+          addClass(span,'slideInRight');
+          } else {
+          addClass(span,'slideInLeft');
+          }
+          
           img.src = image.url;  
-      	  span.innerHTML = `${image.title}`; 
-          append(li, img); // Append all our elements
-          append(li, span);
-          append(ul, li);
-          append(body,ul);
+      	  //span.innerHTML = `${image.title}`; 
+          append(span, img); // Append all our elements
+          append(rowkeep, span);
+          
+          if(counter%2==1) {
+
+            //to do -> get the rows to take only two children
+            //decrease size of images
+            
+            let row = rowkeep;
+            console.log(row);
+            append(body,row);
+            //rowkeep.firstChild.remove();
+            //rowkeep.firstChild.remove();
+            }
+         
+
+          counter++;
 
 	});
 	});
