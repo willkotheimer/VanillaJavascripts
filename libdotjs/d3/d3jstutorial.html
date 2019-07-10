@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<style type="text/css">
+
+body {
+  background-color:  #004987;
+  color: white;
+}
+
+* {color: white !important;}
+ .d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  font-family: sans-serif;
+  font-size: 10px;
+  color: #ffffff;
+}
+.nostroke line {
+  stroke: none;
+}
+
+.axis text,
+.noselect {
+  text-decoration: none;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+  user-select: none; /* non-prefixed version, currently
+  not supported by any browser */
+}
+.axis text,
+.noselect {
+  cursor: default;
+}
+
+.trans-fore {
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10001;
+}
+
+.label {
+  pointer-events: none;
+  text-anchor: middle;
+  font-family: sans-serif;
+}
+
+rect {
+  
+  transition: fill 0.3s;
+
+  fill:  #d1d1d1;
+}
+rect:hover {
+  fill: #C54644
+}
+</style>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.js"></script>
+</head>
+<body>
+
+</body>
+
+<script>
+var margin = {top: 20, right: 20, bottom: 70, left: 40},
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+
+
+// set the ranges
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+var y = d3.scale.linear().range([height, 0]);
+
+// define the axis
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(10);
+
+
+// add the SVG element
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+ 
+var stuff = ["2017-04-23", "1537.02", "2017-04-30", "1925.04", "2017-05-07", "2242.30", "2017-05-14", "2805.77", "2017-05-21", "2892.41", "2017-05-28", "1035.83"];
+
+var data = [];
+
+
+
+for(var i=0; i<=stuff.length-1; i+=2) {    
+
+//only get the last five weeks
+
+	if(stuff.length-i>10) {
+		continue;
+	}
+    
+    var item = stuff[i];
+    var item2 = stuff[i+1]; 
+
+    data.push({ 
+        "x" : item,
+        "y"  : parseInt(item2),
+       
+    });
+}
+
+
+console.log(data);
+
+  
+  // scale the range of the data
+  x.domain(data.map(function(d) { return d.x; }));
+  y.domain([0, d3.max(data, function(d) { return d.y; })]);
+
+  // add axis
+  barGroup = svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.4em")
+      .attr("dy", "1em")
+      .attr('transform', 'rotate(-20)');
+
+
+  
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 5)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      
+      .text("hours");
+
+ var yScale = d3.scale.linear()
+			.domain([0, d3.max(data)])
+			.range([0, height]);
+    
+      innerHeight = height - margin.top - margin.bottom,
+      
+  // Add bar chart
+  svg.selectAll("bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.x); })
+      .attr("width", x.rangeBand())
+       .attr("height", 0)
+      .attr("y", function(d) { return 300; })
+     
+			.transition()
+			.duration(700)
+       .attr("y", function(d){return  y(d.y)+4})
+      .attr("height", function(d) { return 275 -  margin.bottom -y(d.y); });
+      
+ 
+      svg.selectAll('rect').data(data).enter().append('text');
+    
+  
+      d3.selectAll("text").attr("fill", "white");
+      
+      
+
+ 
+    
+
+ 
+</script>
+
+
+</html
