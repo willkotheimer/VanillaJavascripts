@@ -44,7 +44,8 @@
 	.then(response => response.json())
 	.then(function(data) {
 	let images = data;
-   let rowkeep = createNode('row');
+  let rowkeep = [];
+
 	return images.map(function(image) {
     if (image.id > 20) return;
     if(counter%2==0) {
@@ -54,34 +55,37 @@
 		  let li = createNode('li'), //  Create the elements we need
           img = createNode('img'),
           span = createNode('span');
+           
 
           
           addClass(span,'wow');
-          addClass(span,'bounceInUp');
+          //addClass(span,'bounceInUp');
           if(counter%2==0) {
           addClass(span,'slideInRight');
+          span.setAttribute('data-wow-duration','1s');
+          span.setAttribute('data-wow-delay','1s');
+          
+          
           } else {
-          addClass(span,'slideInLeft');
+          addClass(span,'bounceInLeft');
+          span.setAttribute('data-wow-duration','1s');
+          span.setAttribute('data-wow-delay','1s');
+          } 
+          img.src = image.url;  
+          addClass(img,'size');
+          append(span, img); // Append all our elements
+          rowkeep.push(span);
+          
+          if(rowkeep.length==3) {
+            let row = createNode('row');
+            append(row,rowkeep.pop());
+            append(row,rowkeep.pop());
+            append(row,rowkeep.pop());
+            append(body,row);
+
+
           }
           
-          img.src = image.url;  
-      	  //span.innerHTML = `${image.title}`; 
-          append(span, img); // Append all our elements
-          append(rowkeep, span);
-          
-          if(counter%2==1) {
-
-            //to do -> get the rows to take only two children
-            //decrease size of images
-            
-            let row = rowkeep;
-            console.log(row);
-            append(body,row);
-            //rowkeep.firstChild.remove();
-            //rowkeep.firstChild.remove();
-            }
-         
-
           counter++;
 
 	});
