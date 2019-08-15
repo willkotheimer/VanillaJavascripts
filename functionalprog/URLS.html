@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DOM appendChild() Method</title>
+    <style>
+      h1,
+      h2 {
+        font-weight: bold;
+        color: green;
+      }
+
+      body {
+        margin-left: 130px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>URL generator for Testing</h1>
+  
+    <div id="gfg"></div>
+    <button onclick="addUrls()">Submit</button>
+    <script>
+      function addUrls() {
+        const names = [
+          "aldeburgh",
+          "aviala",
+          "birabee",
+          "lehar",
+          "bribie",
+          "emphol",
+          "brofor",
+          "filaus",
+          "cat",
+          "cinlasATM",
+          "cinlas",
+          "galros",
+          "cinmac",
+          "genesis",
+          "cinmal",
+          "grabel",
+          "comashATM",
+          "comashATM",
+          "comcreATM",
+          "commilATM",
+          "componATM",
+          "comsgcATM",
+          "deplew",
+          "filausATM",
+          "galrosATM",
+          "grabelATM",
+          "gretah",
+          "gretah2",
+          "hollow",
+          "hollowATM",
+          "hydlee",
+          "loemab",
+          "malgue",
+          "mhouse",
+          "mhouseATM",
+          "mhousegg",
+          "minarc",
+          "movnewt",
+          "orphil",
+          "orphil2",
+          "platru",
+          "platruATM",
+          "prilon",
+          "rebel",
+          "reel",
+          "reelatm",
+          "reelatm43",
+          "regnew",
+          "regwad",
+          "regyou",
+          "ritcoo",
+          "ritcooATM",
+          "ritzburn",
+          "satkin",
+          "scobarATM",
+          "scott",
+          "scottATM",
+          "sierui",
+          "spratlATM",
+          "stasev",
+          "strbel",
+          "taposATM",
+          "tellasATM",
+          "towske",
+          "twiwoo",
+          "ukca",
+          "valnew",
+          "vidlas",
+          "welorb",
+          "wetwet",
+          "winbro",
+          "woowoo",
+          "woowool",
+          "wtwnew",
+          "wtwnewATM",
+          "xscape",
+          "xscapetestATM",
+          "xscconATM"
+        ].sort();
+
+        const atms = names.filter(function(name) {
+          return name.includes("ATM");
+        });
+
+        const regex = new RegExp("^((?!ATM).)*$", "g");
+        const nonATMs = names.filter(name => name.match(regex));
+
+        let namesATM = atms
+          .map(function(name) {
+            return `<table><tr><td>Test ATM: 
+            ${name} <a target="_blank" 
+            href="http://dmzhost.rcs.local/websales/sales/willatm/atm_start">
+            ${name}</a></td></tr><tr><td>Live British ATM: ${name} 
+                <a target="_blank" href="https://www.jack-roe.co.uk/websales/sales/${name}/atm_start">
+                    ${name}</a></td></tr><tr><td>Live US ATM: ${name} 
+                        <a target="_blank" href="https://internet-ticketing.com/websales/sales/
+                        ${name}/atm_start">${name}</a></td></tr></table>`;
+          })
+          .join("");
+
+        let namesNonATM = nonATMs
+          .map(function(name) {
+            return `<table><tr>
+                <td>Test: ${name} <a target="_blank" href="http://dmzhost.rcs.local/websales/sales/will/start">${name}
+                    </a></td></tr><tr><td>Live British: ${name} 
+                        <a target="_blank" href="https://www.jack-roe.co.uk/websales/sales/${name}/start">${name}
+                            </a></td></tr><tr><td>Live US: ${name} <a target="_blank" href="https://internet-ticketing.com/websales/sales/${name}/start">
+                                ${name}</a></td></tr></table>`;
+          })
+          .join("");
+
+        var node = document.createElement("div");
+        node.innerHTML = namesNonATM;
+
+        var Atmsnode = document.createElement("div");
+        Atmsnode.innerHTML = namesATM;
+
+        document.getElementById("gfg").appendChild(node);
+
+        document.getElementById("gfg").appendChild(Atmsnode);
+      }
+    </script>
+  </body>
+</html>
